@@ -4,11 +4,10 @@
   box-sizing: border-box;
 }
 main {
-  padding: 1rem;
+  flex: 1;
 }
 main h1 {
   margin: 20px 0;
-  text-transform: uppercase;
 }
 
 .products {
@@ -16,10 +15,12 @@ main h1 {
   flex-wrap: wrap;
   justify-content: center;
 }
-
+.site-container {
+  min-height: 100vh;
+}
 .product {
   margin: 1rem;
-border: 1px solid #404040 ;
+/* border: 1px solid #404040 ; */
 }
 .product-info {
   text-align: center;
@@ -28,4 +29,17 @@ border: 1px solid #404040 ;
 .product img {
   width: 100%;
   max-width: 400px;
+}
+.img-large {
+  max-width: 100%;
+}
+.btn-primary {
+  background-color: #ffc000;
+}
+.rating span {
+  color: #ffc000;
+}
+
+a {
+  text-decoration: none;
 }

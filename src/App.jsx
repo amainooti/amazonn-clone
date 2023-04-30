@@ -1,38 +1,43 @@
 import './App.css'
-import data from './data';
+import { ProductScreen } from './screens/ProductScreen';
+import HomeScreen from './screens/HomeScreen';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Container, Navbar } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 function App() {
 
   return (
-    <>
-      <div>
+    <Router>
+      <div className="d-flex flex-column site-container">
         <header>
-          <a href="/"> Amazon. </a>
+          <Navbar bg='dark' variant='dark'>
+            <Container>
+                <LinkContainer to="/">
+              <Navbar.Brand>
+                  Amazon
+              </Navbar.Brand>
+                </LinkContainer>
+
+
+            </Container>
+          </Navbar>
         </header>
         <main>
-            <h1> Featured Product </h1>
-          <div className='products'>
-            {
-              data.products.map(product => (
-                <div className='product' key={product.id}>
-                  <a href={`/products/${product.slug}`} >
-                  <img src={product.image} alt={product.slug} />
-                  </a>
-                  <div className='product-info'>
-                  <a href={`/products/${product.slug}`} >
-                      <p> {product.name} </p>
-                    </a>
-                    <p> <strong> ${product.price} </strong></p>
-                    <button> Add to cart </button>
-                  </div>
-                </div>
-              ))
-            }
-          </div>
+          <Container>
+            <Routes>
+              <Route path='/product/:slug' element={<ProductScreen />} />
+              <Route path='/' element={<HomeScreen />} />
+            </Routes>
+          </Container>
+
         </main>
+        <footer>
+          <div className="text-center"> All rights reserved.</div>
+        </footer>
       </div>
 
-    </>
+    </Router>
   )
 }
 
