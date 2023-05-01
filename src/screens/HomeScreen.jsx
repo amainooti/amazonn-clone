@@ -3,6 +3,10 @@ import { useEffect, useReducer } from 'react'
 import axios from 'axios'
 import { Col, Row } from 'react-bootstrap'
 import Product from '../components/Product'
+import { Helmet } from 'react-helmet-async'
+import LoadingBox from '../components/LoadingBox'
+import MessageBox from '../components/MessageBox'
+import { getError } from '../utils'
 // import logger from 'use-reducer-logger';
 
 
@@ -33,7 +37,7 @@ function HomeScreen() {
         const result = await axios.get('http://localhost:3500/api/products');
         dispatch({type: 'FETCH_SUCCESS', payload: result.data})
       } catch (error) {
-        dispatch({type: 'FETCH_ERROR', payload: error.message})
+        dispatch({type: 'FETCH_FAIL', payload:getError(error)})
       }
 
     }
@@ -41,12 +45,15 @@ function HomeScreen() {
   }, [])
 
   return (
-      <>
+    <>
+      <Helmet>
+        <title> Amazon </title>
+      </Helmet>
           <h1> Featured Product </h1>
           <div className='products'>
         {
-          loading ? <div className='loading'>Loading </div> :
-            error ? <div> {error}</div>
+          loading ? <LoadingBox />:
+            error ? <MessageBox variant="danger"> {error}</MessageBox>
               : (
                 <Row>
 
