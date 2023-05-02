@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useReducer } from "react";
 import { Badge, Button, Card, Col, ListGroup, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Rating from "../components/Rating";
 import { Helmet } from "react-helmet-async";
 import LoadingBox from "../components/LoadingBox";
@@ -25,6 +25,7 @@ const reducer = (state, action) => {
 
 
 export const ProductScreen = () => {
+  const navigate = useNavigate()
   const params = useParams()
     const { slug } = params;
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
@@ -47,9 +48,27 @@ export const ProductScreen = () => {
   }, [slug])
 
   const { state, dispatch: ctxDispatch } = useContext(Store)
+  const { cart } = state;
 
-  const addToCartHandler = () => {
-  ctxDispatch({type: "CART_ADD_ITEM", payload: {...product, quantity: 1}})
+
+  const addToCartHandler = async() => {
+    const existInCart = cart.cartItems.find(item => item._id === product._id);
+    const quantity = existInCart ? existInCart.quantity + 1 : 1
+
+    try {
+      const { data } = await axios.get(`http://localhost:3500/api/products/${product._id}`);
+      console.log(data)
+      if (data.countInStock < quantity) {
+        window.alert('Sorry, product is out of stock.')
+        return;
+      }
+
+    } catch (error) {
+      // console.log(">>>>>>>>"+ getError(error))
+    }
+
+    ctxDispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } })
+    navigate("/cart")
 }
   return (
     loading ? <LoadingBox /> :

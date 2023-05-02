@@ -56,10 +56,9 @@ function HomeScreen() {
             error ? <MessageBox variant="danger"> {error}</MessageBox>
               : (
                 <Row>
-
                   {
                     products.map(product => (
-                      <Col sm={6} md={4} lg={3} key={product.id}>
+                      <Col sm={6} md={4} lg={3} key={product.key}>
                         <Product product={product}></Product>
                     </Col>
               ))}
