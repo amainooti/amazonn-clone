@@ -41,5 +41,9 @@ main h1 {
 }
 
 a {
-  text-decoration: none;
+  color: #000;
+}
+
+.small-container {
+  max-width: 600px;
 }
