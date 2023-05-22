@@ -3,7 +3,9 @@ import { Helmet } from "react-helmet-async"
 import { Link, useLocation } from "react-router-dom"
 
 function SignInScreen() {
+    // searrch holds the query string parameter
     const { search } = useLocation();
+    // using  the new URLSearchParams(search).get('')
     const redirectUrl = new URLSearchParams(search).get('redirect');
     const redirect = redirectUrl ? redirectUrl : '/';
 

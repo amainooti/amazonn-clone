@@ -1,13 +1,14 @@
 // import React from 'react'
 
 import { Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 import axios from "axios";
 import { useContext } from "react";
 import { Store } from "../Store";
 
 function Product({ product }) {
+  const navigate = useNavigate()
   const { state, dispatch: ctxDispatch } = useContext(Store)
   const { cart: { cartItems } } = state;
 
@@ -21,7 +22,8 @@ function Product({ product }) {
         window.alert('Sorry, product is out of stock.')
         return;
         }
-        ctxDispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } })
+    ctxDispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } })
+    navigate("/cart")
     }
   return (
       <Card>
@@ -35,7 +37,7 @@ function Product({ product }) {
               <Rating rating={product.rating} numReviews={product.numReviews}></Rating>
         <Card.Text> ${product.price} </Card.Text>
         {product.countInStock === 0 ?
-          <Button variant="light" dissabled> Out of stock </Button> :
+          <Button variant="light" disabled> Out of stock </Button> :
           <Button onClick={() => addToChartHandler(product)}> Add to cart </Button>}
         </Card.Body>
     </Card>

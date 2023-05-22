@@ -12,7 +12,7 @@ function CartScreen() {
     const { cart: { cartItems } } = state
 
     const updateCartHandler = async (item, quantity) => {
-        const { data } = await axios.get(`http://localhost:3500/api/products/${item._id}`)
+        const { data } = await axios.get(`http://localhost:3500/api/v1/products/${item._id}`)
         if (data.countInStock < quantity) {
         window.alert('Sorry, product is out of stock.')
         return;
@@ -37,7 +37,7 @@ function CartScreen() {
                   ) : (
                           <ListGroup>
                               {cartItems.map((item) => (
-                                  <ListGroup.Item key={item.key}>
+                                  <ListGroup.Item key={item._id}>
                                       <Row className="align-items-center">
                                           <Col md={4}>
                                               <img src={item.image} alt={item.slug} className="img-fluid rounded img-thumbnail"></img>
@@ -54,7 +54,7 @@ function CartScreen() {
                                               <Button
                                                   onClick={()=> updateCartHandler(item, item.quantity++ )}
                                                   variant="light"
-                                                  disabled={item.quantity === 1}>
+                                                  disabled={item.quantity < 1}>
 
                                                   <i className="fas fa-plus-circle"></i>
                                               </Button>
@@ -86,7 +86,7 @@ function CartScreen() {
                               </ListGroup.Item>
                               <ListGroup.Item>
                                   <div className="d-grid">
-                                      <Button onClick={checkoutHandler} type="button" variant="primary" disabled={cartItems.length === 0}>
+                                      <Button  onClick={checkoutHandler} type="button" variant={cartItems.length === 0 ? "secondary" : "primary"} disabled={cartItems.length === 0}>
                                           Proceed to Checkout
                                       </Button>
                                   </div>

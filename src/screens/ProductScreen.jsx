@@ -56,7 +56,7 @@ export const ProductScreen = () => {
     const quantity = existInCart ? existInCart.quantity++ : 1
 
     try {
-      const { data } = await axios.get(`http://localhost:3500/api/products/${product._id}`);
+      const { data } = await axios.get(`http://localhost:3500/api/v1/products/${product._id}`);
       console.log(data)
       if (data.countInStock < quantity) {
         window.alert('Sorry, product is out of stock.')

@@ -9,6 +9,13 @@ import MessageBox from '../components/MessageBox'
 import { getError } from '../utils'
 // import logger from 'use-reducer-logger';
 
+const initialState = {
+  products: [],
+  error: '',
+  loading: false
+}
+
+
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -25,17 +32,16 @@ const reducer = (state, action) => {
 }
 
 function HomeScreen() {
-  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
-    products: [],
-    error: '',
-    loading: true
-})
+  const [{ loading, error, products }, dispatch] = useReducer(reducer, initialState)
+  console.log(products)
+
+  // apinc
   useEffect(() => {
     const fetchData = async () => {
       dispatch({type: 'FETCH_REQUEST'})
       try {
         const result = await axios.get('http://localhost:3500/api/products');
-        dispatch({type: 'FETCH_SUCCESS', payload: result.data})
+        dispatch({type: 'FETCH_SUCCESS', payload: result.data.products})
       } catch (error) {
         dispatch({type: 'FETCH_FAIL', payload:getError(error)})
       }
@@ -57,8 +63,8 @@ function HomeScreen() {
               : (
                 <Row>
                   {
-                    products.map(product => (
-                      <Col sm={6} md={4} lg={3} key={product.key}>
+                    products.map((product) => (
+                      <Col sm={6} md={4} lg={3} key={product._id}>
                         <Product product={product}></Product>
                     </Col>
               ))}
