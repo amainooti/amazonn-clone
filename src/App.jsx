@@ -10,6 +10,10 @@ import CartScreen from './screens/CartScreen';
 import NotFound from './screens/NotFound';
 import SignInScreen from './screens/SignInScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
+import SignUpScreen from './screens/SignUpScreen';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   const { state, dispatch: ctxDispatch} = useContext(Store)
@@ -24,6 +28,7 @@ function App() {
   return (
     <Router>
       <div className="d-flex flex-column site-container">
+        <ToastContainer position='bottom-center' limit={1} />
         <header>
           <Navbar bg='dark' variant='dark'>
             <Container>
@@ -71,6 +76,7 @@ function App() {
               <Route path='/product/:slug' element={<ProductScreen />} />
               <Route path='/cart' element={<CartScreen />} />
               <Route path='/signin' element={<SignInScreen />} />
+              <Route path='/signup' element={<SignUpScreen />} />
               <Route path='/shipping' element={<ShippingAddressScreen />} />
               <Route path='*' element={<NotFound />} />
             </Routes>

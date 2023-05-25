@@ -1,5 +1,5 @@
 // import { Link } from 'react-router-dom'
-import { useEffect, useReducer } from 'react'
+import { useContext, useEffect, useReducer } from 'react'
 import axios from 'axios'
 import { Col, Row } from 'react-bootstrap'
 import Product from '../components/Product'
@@ -7,6 +7,8 @@ import { Helmet } from 'react-helmet-async'
 import LoadingBox from '../components/LoadingBox'
 import MessageBox from '../components/MessageBox'
 import { getError } from '../utils'
+import { Store } from '../Store'
+import { toast } from 'react-toastify'
 // import logger from 'use-reducer-logger';
 
 const initialState = {
@@ -32,8 +34,10 @@ const reducer = (state, action) => {
 }
 
 function HomeScreen() {
+  // const { state, dispatch: ctxDispatch } = useContext(Store)
+  // const { userInfo } = state;
   const [{ loading, error, products }, dispatch] = useReducer(reducer, initialState)
-  console.log(products)
+  // console.log(products)
 
   // apinc
   useEffect(() => {
@@ -49,6 +53,12 @@ function HomeScreen() {
     }
     fetchData()
   }, [])
+
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     toast.success("Welcome", userInfo.name)
+  //   }
+  // }, [userInfo,]);
 
   return (
     <>

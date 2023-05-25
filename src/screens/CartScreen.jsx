@@ -47,7 +47,7 @@ function CartScreen() {
                                           <Col md={3}>
                                               <Button
                                                   onClick={()=> updateCartHandler(item, item.quantity-- )}
-                                                  variant="light" disabled={item.quantity === 1}>
+                                                  variant="light" disabled={item.quantity < 1}>
                                                   <i className="fas fa-minus-circle"></i>
                                               </Button> {" "}
                                               <span> {item.quantity} </span> {" "}

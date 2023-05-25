@@ -1,18 +1,28 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { Helmet } from 'react-helmet-async'
 import { Store } from '../Store';
 import { useNavigate } from 'react-router-dom';
+import CheckoutSteps from '../components/CheckoutSteps';
 
 export default function ShippingAddressScreen() {
-  const [fullName, setFullName] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [country, setCountry] = useState('');
-
   const navigate = useNavigate()
-  const { dispatch: ctxDispatch } = useContext(Store)
+  const { state, dispatch: ctxDispatch } = useContext(Store)
+
+  const { userInfo, cart: { shippingAddress } } = state;
+
+
+  const [fullName, setFullName] = useState( shippingAddress.fullName || '');
+  const [address, setAddress] = useState(shippingAddress.address || '');
+  const [city, setCity] = useState(shippingAddress.city || '');
+  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || '');
+  const [country, setCountry] = useState(shippingAddress.country ||'');
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/signin?redirect=/shipping')
+    }
+  }, [userInfo, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -43,6 +53,7 @@ export default function ShippingAddressScreen() {
       <Helmet>
         <title> Shipping Address </title>
       </Helmet>
+      <CheckoutSteps step1 step2></CheckoutSteps>
       <div className='container small-container'>
         <h1 className='my-3'> Shipping Address </h1>
         <Form onSubmit={handleSubmit}>
