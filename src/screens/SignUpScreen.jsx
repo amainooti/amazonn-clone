@@ -32,7 +32,7 @@ function SignUpScreen() {
         e.preventDefault();
         if (password !== confirmPassword) {
             toast.error('password do not match')
-
+            return;
         }
         try {
             const { data } = await axios.post('http://localhost:3500/api/users/signup', {
