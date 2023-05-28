@@ -14,7 +14,7 @@ function PaymentMethod() {
     } = state;
 
     const [paymentMethodName, setPaymentMethod] = useState(paymentMethod || 'Paypal')
-    console.log(paymentMethodName)
+
 
     useEffect(() => {
         if (!shippingAddress?.address) {
@@ -46,7 +46,7 @@ function PaymentMethod() {
                       label="Paypal"
                       value="Paypal"
                       checked={paymentMethodName === "Paypal"}
-                      onChange={(e)=> setPaymentMethod(e.target.checked)}
+                      onChange={(e)=> setPaymentMethod(e.target.value)}
                   />
 
               </div>
@@ -57,7 +57,7 @@ function PaymentMethod() {
                       label="Stripe"
                       value="Stripe"
                       checked={paymentMethodName === "Stripe"}
-                      onChange={(e)=> setPaymentMethod(e.target.checked)}
+                      onChange={(e)=> setPaymentMethod(e.target.value)}
                   />
 
               </div>
