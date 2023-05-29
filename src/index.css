@@ -48,6 +48,11 @@ a {
   max-width: 600px;
 }
 
+.img-thumbnail {
+  width: 100px;
+  height: 100px;
+}
+
 .checkout:hover {
 cursor: not-allowed;
 }
