@@ -1,5 +1,5 @@
 // import { Link } from 'react-router-dom'
-import { useContext, useEffect, useReducer } from 'react'
+import {  useEffect, useReducer } from 'react'
 import axios from 'axios'
 import { Col, Row } from 'react-bootstrap'
 import Product from '../components/Product'
@@ -7,8 +7,8 @@ import { Helmet } from 'react-helmet-async'
 import LoadingBox from '../components/LoadingBox'
 import MessageBox from '../components/MessageBox'
 import { getError } from '../utils'
-import { Store } from '../Store'
-import { toast } from 'react-toastify'
+// import { Store } from '../Store'
+// import { toast } from 'react-toastify'
 // import logger from 'use-reducer-logger';
 
 const initialState = {
