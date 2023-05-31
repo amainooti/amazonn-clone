@@ -6,8 +6,8 @@ import { Store } from "../Store";
 import { Link, useNavigate } from "react-router-dom";
 import { getError } from "../utils";
 import { toast } from "react-toastify";
-import  Axios  from "axios";
 import LoadingBox from "../components/LoadingBox";
+import axios from "axios";
 
 export default function PlaceOrderScreen() {
 
@@ -32,7 +32,7 @@ export default function PlaceOrderScreen() {
     const [{ loading }, dispatch] = useReducer(reducer, initialState);
 
     const { state, dispatch: ctxDispatch } = useContext(Store)
-    const { userInfo, cart } = state
+    const { userInfo, cart } = state;
 
 
     const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
@@ -47,7 +47,7 @@ export default function PlaceOrderScreen() {
     const placeOrderHandler = async () => {
         try {
             dispatch({ type: "CREATE_REQUEST" })
-            const { data } = await Axios.post('/api/orders', {
+            const { data } = await axios.post('http://localhost:3500/api/orders', {
                 orderItems: cart.cartItems,
                 shippingAddress: cart.shippingAddress,
                 paymentMethod: cart.paymentMethod,
@@ -63,9 +63,9 @@ export default function PlaceOrderScreen() {
                 }
             )
             ctxDispatch({ type: "CART_CLEAR" })
-            dispatch({ type: "CREAT_SUCCESS" })
+            dispatch({ type: "CREATE_SUCCESS" })
             localStorage.removeItem("cartItems")
-            navigate(`/orders/${data.order._id}`)
+            navigate(`/order/${data.order._id}`)
         } catch (error) {
             dispatch({ type: "CREATE_FAIL" })
             toast.error(getError(error))
